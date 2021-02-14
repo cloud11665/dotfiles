@@ -1,0 +1,7 @@
+*
+!.gitignore
+!README.md
+!.bashrc
+!.bash_prompt
+!.bash_aliases
+!.ssh/authorized_keys
