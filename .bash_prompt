@@ -1,0 +1,49 @@
+function c_prompt {
+	local exit="$?"
+
+	local reset="$(tput sgr0)"
+	local bold="$(tput bold)"
+
+	local red="$(tput setaf 1)"
+	local green="$(tput setaf 2)"
+	local yellow="$(tput setaf 3)"
+	local blue="$(tput setaf 4)"
+	local magenta="$(tput setaf 5)"
+	local cyan="$(tput setaf 6)"
+	local white="$(tput setaf 7)"
+
+	if [[ -n "$VIRTUAL_ENV" ]]; then
+			VIRTUALENV=${VIRTUAL_ENV##*\\}
+			VIRTUALENV=${VIRTUAL_ENV##*/}
+			pyenv="${green}($VIRTUAL_ENV)${reset} "
+	fi
+
+	local git=`git branch 2> /dev/null | grep -e ^* | sed -E  s/^\\\\\*\ \(.+\)$/\\\\\1\ /`
+	if [[ -n "$git" ]]; then
+			git="${git%% }"
+			git=" on  ${git}"
+	fi
+
+	local open="${bold}${red}[${reset}"
+	local close="${bold}${red}]${reset}"
+	local at="${bold}${green}@${reset}"
+	local user="${bold}${yellow}\u${reset}"
+	local host="${bold}${blue}\h${reset}"
+	local pwd="${bold}${magenta}\w${reset}"
+
+	if [ "$exit" -eq 0 ]; then
+		local statcol="${white}"
+	else
+		local statcol="${reset}${red}"
+	fi
+
+	if [ "$EUID" -eq 0 ]; then
+		local _prompt="${bold}${statcol}#${reset}"
+	else
+		local _prompt="${bold}${statcol}\$${reset}"
+	fi
+
+	export PS1="${pyenv}${open}${user}${at}${host} ${pwd}${close}${git} ${_prompt} "
+}
+
+export PROMPT_COMMAND=c_prompt
