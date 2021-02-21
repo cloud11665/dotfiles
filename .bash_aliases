@@ -52,3 +52,7 @@ alias probe="sudo -E hw-probe -all -upload"
 #fix obvious typo's
 alias cd..='cd ..'
 alias pdw="pwd"
+
+
+alias python2="python"
+alias python="python3"

@@ -1,22 +1,25 @@
-#!/bin/bash
+# .bashrc
 
-# add local binary folders to path
-if [ -d "$HOME/.bin" ]; then
-  PATH="$HOME/.bin:$PATH"
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
 fi
 
-if [ -d "$HOME/.local/bin" ]; then
-  PATH="$HOME/.local/bin:$PATH"
+# User specific environment
+if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
+then
+    PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 fi
+export PATH
 
 # source aliases
-if [ -d "$HOME/.bash_aliases" ]; then
-  source "$HOME/.bash_aliases"
+if [ -f ~/.bash_aliases ]; then
+  source ~/.bash_aliases
 fi
 
 # source prompt
-if [ -d "$HOME/.bash_prompt" ]; then
-  source "$HOME/.bash_prompt"
+if [ -f ~/.bash_prompt ]; then
+  source ~/.bash_prompt
 fi
 
 # ===============================================
